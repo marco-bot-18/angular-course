@@ -1,0 +1,20 @@
+.course-card.beginner {
+  background-color: #e1f5fe;
+}
+.course-card.intermediate {
+  background-color: #fff3e0;
+}
+.course-card.advanced {
+  background-color: #fbe9e7;
+}
+
+.category {
+  margin-top: 15px;
+  background: lightcyan;
+  font-size: 14px;
+  color: grey;
+  border: 1px solid grey;
+  border-radius: 4px;
+  padding: 2px 3px;
+  display: inline;
+}
