@@ -9,7 +9,7 @@
       ></ng-content>
     } @else {
       <ng-container
-        *ngTemplateOutlet="noImageTpl;context: {description:course.description}">
+        *ngTemplateOutlet="noImageTpl; context: {description:course.description}">
       </ng-container>
     }
     <ng-content select=".course-description"></ng-content>

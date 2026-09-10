@@ -1,34 +1,42 @@
-import {AfterViewInit, Component, ElementRef, QueryList, ViewChild, ViewChildren, ChangeDetectionStrategy} from '@angular/core';
-import {COURSES} from '../db-data';
-import {Course} from './model/course';
-import {CourseCardComponent} from './course-card/course-card.component';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+  ChangeDetectionStrategy,
+} from "@angular/core";
+import { COURSES } from "../db-data";
+import { Course } from "./model/course";
+import { CourseCardComponent } from "./course-card/course-card.component";
+import { HighlightedDirective } from "./directives/highlighted.directive";
 
 @Component({
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.css"],
+  changeDetection: ChangeDetectionStrategy.Eager,
+  standalone: false,
 })
 export class AppComponent implements AfterViewInit {
+  courses = COURSES;
 
-    courses = COURSES;
+  @ViewChildren(CourseCardComponent, { read: ElementRef })
+  cards: QueryList<ElementRef>;
 
+  @ViewChild(HighlightedDirective)
+  highlighted: HighlightedDirective;
 
-    @ViewChildren(CourseCardComponent, {read: ElementRef})
-    cards : QueryList<ElementRef>;
+  constructor() {}
 
+  ngAfterViewInit() {
+    console.log("highlighted directive: ", this.highlighted);
+  }
 
-    constructor() {
+  onCourseSelected(course: Course) {}
 
-    }
-
-    ngAfterViewInit() {
-
-    }
-
-    onCourseSelected(course:Course) {
-
-    }
-
+  onToggle(isHighlighted: boolean) {
+    console.log("Toggle highlight event triggered: ", isHighlighted);
+  }
 }
