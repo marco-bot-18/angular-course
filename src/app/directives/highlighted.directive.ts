@@ -1,12 +1,10 @@
 import {
   Directive,
   HostBinding,
-  Input,
   HostListener,
   input,
+  output,
   signal,
-  Output,
-  EventEmitter,
 } from "@angular/core";
 
 @Directive({
@@ -14,39 +12,38 @@ import {
   exportAs: "hl",
 })
 export class HighlightedDirective {
-  // highlighted = input<boolean>(false, { alias: "highlighted" });
-  @Input("highlighted")
-  isHighlighted: string | boolean = false;
+  readonly highlighted = input<boolean | string>(false, { alias: "highlighted" });
+  readonly isHighlighted = signal<boolean>(false);
 
-  @Output() toggleHighlight = new EventEmitter<boolean>();
+  readonly toggleHighlight = output<boolean>();
 
   constructor() {
-    console.log("HighlightedDirective created: ", this.isHighlighted);
+    console.log("HighlightedDirective created: ", this.highlighted());
   }
 
   @HostBinding("class.highlighted")
   get cssClasses() {
-    return this.isHighlighted;
+    return this.isHighlighted() || this.highlighted();
   }
 
   @HostListener("mouseover", ["$event"])
-  mouseOver($event) {
-    this.isHighlighted = true;
-    this.toggleHighlight.emit(this.isHighlighted);
+  mouseOver($event: MouseEvent) {
+    this.isHighlighted.set(true);
+    this.toggleHighlight.emit(this.isHighlighted());
     console.log("Mouse over event triggered");
     console.log("Event target: ", $event);
   }
 
   @HostListener("mouseleave")
   mouseLeave() {
-    this.isHighlighted = false;
-    this.toggleHighlight.emit(this.isHighlighted);
+    this.isHighlighted.set(false);
+    this.toggleHighlight.emit(this.isHighlighted());
     console.log("Mouse leave event triggered");
   }
 
   toggle() {
-    this.isHighlighted = !this.isHighlighted;
-    this.toggleHighlight.emit(this.isHighlighted);
-    console.log("Toggle highlight event triggered: ", this.isHighlighted);
+    this.isHighlighted.set(!this.isHighlighted());
+    this.toggleHighlight.emit(this.isHighlighted());
+    console.log("Toggle highlight event triggered: ", this.isHighlighted());
   }
 }
