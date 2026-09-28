@@ -40,7 +40,7 @@ import { CourseImageComponent } from "../course-image/course-image.component";
 export class CourseCardComponent implements AfterViewInit, AfterContentInit {
   // @Input() course!: Courses;
   course = input<Courses>();
-  cardIndex = input<Number>();
+  cardIndex = input<number>();
 
   courseSelected = output<Courses>();
 
